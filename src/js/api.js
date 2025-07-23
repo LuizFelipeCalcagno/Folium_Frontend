@@ -14,18 +14,17 @@ async function postData(endpoint, data) {
 }
 
 export async function login(email, password, rememberMe) {
-  return postData('/login', { email, password, rememberMe });
+  return postData('/api/auth/login', { email, password, rememberMe });
 }
 
 export async function confirmCode(code) {
-  return postData('/login/confirm', { code });
+  return postData('/api/auth/confirm', { code });
 }
 
 export async function logout() {
-  return postData('/logout', {});
+  return postData('/api/auth/logout', {});
 }
 
-// **Aqui a nova função register**
 export async function register(name, email, password, confipassword) {
-  return postData('/register', { name, email, password, confipassword });
+  return postData('/api/auth/register', { name, email, password, confipassword });
 }
