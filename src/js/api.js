@@ -3,14 +3,19 @@ const BACKEND_URL = 'https://foliumbackend-production.up.railway.app';
 async function postData(endpoint, data) {
   const response = await fetch(`${BACKEND_URL}${endpoint}`, {
     method: 'POST',
-    credentials: 'include', // se precisar cookies/session
+    credentials: 'include', // se usar cookies/sessão
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
 
   const text = await response.text();
+
   if (!response.ok) throw new Error(text);
   return text;
+}
+
+export async function register(name, email, password, confipassword) {
+  return postData('/api/auth/register', { name, email, password, confipassword });
 }
 
 export async function login(email, password, rememberMe) {
@@ -23,8 +28,4 @@ export async function confirmCode(code) {
 
 export async function logout() {
   return postData('/api/auth/logout', {});
-}
-
-export async function register(name, email, password, confipassword) {
-  return postData('/api/auth/register', { name, email, password, confipassword });
 }
