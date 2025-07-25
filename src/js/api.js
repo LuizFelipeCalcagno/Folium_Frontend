@@ -8,23 +8,11 @@ async function postData(endpoint, data) {
     body: JSON.stringify(data),
   });
 
-  let responseData;
-  try {
-    responseData = await response.json();
-  } catch {
-    // fallback se não for JSON
-    responseData = await response.text();
-  }
+  const text = await response.text();
 
-  if (!response.ok) {
-    // Se for objeto JSON com message, use message
-    const errorMsg = responseData?.message || response.statusText || 'Erro desconhecido';
-    throw new Error(typeof errorMsg === 'string' ? errorMsg : JSON.stringify(errorMsg));
-  }
-
-  return responseData.message || 'Sucesso';
+  if (!response.ok) throw new Error(text);
+  return text;
 }
-
 
 export async function register(name, email, password, confipassword) {
   return postData('/api/auth/register', { name, email, password, confipassword });
