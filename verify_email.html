@@ -82,7 +82,7 @@
     const error = document.getElementById("error");
     const hash = window.location.pathname.split('/').pop();
 
-    fetch(`https://foliumbackend-production.up.railway.app/api/auth/verify/${hash}`)
+    fetch(`https://foliumbackend-production.up.railway.app/api/auth/verify?hash=${hash}`)
       .then(res => {
         if (!res.ok) throw new Error('Erro na verificação');
         return res.text();
