@@ -25,6 +25,11 @@
       max-width: 420px;
       width: 90%;
       text-align: center;
+      display: none;
+    }
+
+    .container.active {
+      display: block;
     }
 
     .container h1 {
@@ -39,8 +44,6 @@
       margin-bottom: 30px;
       color: #333;
     }
-
-    .hidden { display: none; }
 
     button {
       background-color: #5c2ee2;
@@ -62,39 +65,34 @@
   </style>
 </head>
 <body>
-  <div class="container" id="success" class="hidden">
+  <div class="container" id="success">
     <h1>✅ E-mail Confirmado!</h1>
     <p>Obrigado por confirmar seu endereço de e-mail. Sua conta agora está ativada.</p>
     <button onclick="window.location.href='index.html'">Ir para Login</button>
   </div>
 
-  <div class="container" id="error" class="hidden" style="display: none;">
+  <div class="container" id="error">
     <h1>❌ Erro ao confirmar</h1>
     <p>Não foi possível confirmar sua conta. O link pode estar expirado ou inválido.</p>
     <button onclick="window.location.href='index.html'">Voltar</button>
   </div>
 
   <script>
-    const hash = new URLSearchParams(window.location.search).get("hash");
     const success = document.getElementById("success");
     const error = document.getElementById("error");
+    const hash = window.location.pathname.split('/').pop();
 
-    if (hash) {
-      fetch(`https://foliumbackend-production.up.railway.app/api/auth/verify/${hash}`)
-        .then(res => {
-          if (!res.ok) throw new Error('Erro na verificação');
-          return res.text();
-        })
-        .then(() => {
-          success.style.display = 'block';
-        })
-        .catch(() => {
-          error.style.display = 'block';
-        });
-    } else {
-      error.style.display = 'block';
-    }
+    fetch(`https://foliumbackend-production.up.railway.app/api/auth/verify/${hash}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Erro na verificação');
+        return res.text();
+      })
+      .then(() => {
+        success.classList.add('active');
+      })
+      .catch(() => {
+        error.classList.add('active');
+      });
   </script>
 </body>
 </html>
-
