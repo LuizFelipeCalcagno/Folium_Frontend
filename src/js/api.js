@@ -3,9 +3,11 @@ const BACKEND_URL = 'https://foliumbackend-production.up.railway.app';
 async function postData(endpoint, data) {
   const response = await fetch(`${BACKEND_URL}${endpoint}`, {
     method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+    credentials: 'include', // <-- ESSENCIAL
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
   });
 
   const text = await response.text();
