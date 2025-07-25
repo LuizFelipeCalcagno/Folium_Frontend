@@ -243,7 +243,7 @@
           const code = document.getElementById("confirmCode").value;
 
           try {
-            const response = await fetch("http://localhost:3000/confirm", {
+            const response = await fetch("https://foliumbackend-production.up.railway.app/api/auth/confirm", {
               method: "POST",
               credentials: "include",
               headers: {
