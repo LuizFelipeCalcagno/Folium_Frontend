@@ -77,11 +77,16 @@
     <button onclick="window.location.href='index.html'">Voltar</button>
   </div>
 
-  <script>
-    const success = document.getElementById("success");
-    const error = document.getElementById("error");
-    const hash = window.location.pathname.split('/').pop();
+<script>
+  const success = document.getElementById("success");
+  const error = document.getElementById("error");
+  
+  const urlParams = new URLSearchParams(window.location.search);
+  const hash = urlParams.get('hash');
 
+  if (!hash) {
+    error.classList.add('active');
+  } else {
     fetch(`https://foliumbackend-production.up.railway.app/api/auth/verify?hash=${hash}`)
       .then(res => {
         if (!res.ok) throw new Error('Erro na verificação');
@@ -93,6 +98,8 @@
       .catch(() => {
         error.classList.add('active');
       });
-  </script>
+  }
+</script>
+
 </body>
 </html>
